@@ -1,8 +1,8 @@
-package edu.rug.gogp.patrick.lemmings;
+package edu.rug.gogp.patrik.lemmings.view;
 
 import java.util.Observable;
 import java.util.Observer;
-import lemmings.fields.Field;
+import edu.rug.gogp.patrik.lemmings.field.Field;
 
 
 /**
@@ -10,7 +10,7 @@ import lemmings.fields.Field;
  *
  * @author Herbert Kruitbosch
  */
-public class FieldView extends javax.swing.JFrame implements Observer {
+public class FieldView extends JFrame implements Observer {
     Field model;
 
     /** Creates new form FieldView */
@@ -172,6 +172,7 @@ public class FieldView extends javax.swing.JFrame implements Observer {
     // End of variables declaration//GEN-END:variables
 
 
+    @Override
     public void update(Observable ob, Object o) {
         capacityLabel.setText("capacity: " + model.getCapacity());
         hostnameLabel.setText("adress: " + model.getAddress());

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.rug.gogp.patrick.lemmings;
+package edu.rug.gogp.patrik.lemmings;
 
 /**
  *
