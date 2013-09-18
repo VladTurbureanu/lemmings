@@ -39,32 +39,28 @@ public class Field extends Observable implements Runnable {
         }
     }
 
-    public void addObserver(FieldView aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
-    }
-
     public String getCapacity() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+        return "0";
     }
 
     public String getAddress() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+        return sSocket.getLocalSocketAddress().toString();
     }
 
     public String getPort() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+        return sSocket.getLocalPort() + "";
     }
 
     public String getNumberOfLemmings() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+        return "0";
     }
 
     public String getLemmingsListing() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+        return "<geen lemmingen>";
     }
 
     public String getFieldsListing() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+         return "<geen velden>";
     }
 
     @Override

@@ -29,7 +29,6 @@ class InputHandler extends Thread {
         } catch (IOException ex) {
             ex.printStackTrace();//Logger.getLogger(InputHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
 }
