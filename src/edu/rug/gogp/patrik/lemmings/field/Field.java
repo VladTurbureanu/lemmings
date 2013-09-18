@@ -30,21 +30,6 @@ public class Field extends Observable implements Runnable {
         this.notifyObservers();
     }
 
-    public void dummy() {
-        try {
-            int i = 1;
-            while (true) {
-                Socket incoming = sSocket.accept();
-                System.out.println("Spawning " + i);
-                Thread t = new InputHandler(incoming, i);
-                t.start();
-                i++;
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();//Logger.getLogger(Field.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public String getCapacity() {
         return "0";
     }
@@ -71,6 +56,17 @@ public class Field extends Observable implements Runnable {
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
+        try {
+            int i = 1;
+            while (true) {
+                Socket incoming = sSocket.accept();
+                System.out.println("Spawning " + i);
+                Thread t = new InputHandler(incoming, i);
+                t.start();
+                i++;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();//Logger.getLogger(Field.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
