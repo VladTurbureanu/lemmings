@@ -22,6 +22,12 @@ public class Field extends Observable implements Runnable {
 
     public Field(int serverPort) throws IOException {
         this.sSocket = new ServerSocket(serverPort);
+
+    }
+
+    public synchronized void dummy2() {
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public void dummy() {
@@ -44,7 +50,7 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getAddress() {
-        return sSocket.getLocalSocketAddress().toString();
+        return sSocket.getInetAddress().getHostAddress().toString();
     }
 
     public String getPort() {
@@ -60,7 +66,7 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getFieldsListing() {
-         return "<geen velden>";
+        return "<geen velden>";
     }
 
     @Override
