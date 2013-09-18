@@ -1,9 +1,8 @@
 package edu.rug.gogp.patrik.lemmings.field;
 
+import edu.rug.gogp.patrik.lemmings.Lemming;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -23,7 +22,11 @@ class InputHandler extends Thread {
     public void run() {
         try{
             ObjectInputStream in = new ObjectInputStream(incoming.getInputStream());
-            System.out.println("lemmingsch!!!!!");
+            try {
+                System.out.println("lemmingsch!!!!!" + (Lemming) in.readObject());
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
         } catch (IOException ex) {
             ex.printStackTrace();//Logger.getLogger(InputHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

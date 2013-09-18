@@ -13,4 +13,11 @@ public class Lemming extends Thread implements Serializable {
         FieldConnector fc = new FieldConnector(Integer.parseInt(field.getPort()));
         fc.send(this);
     }
+
+    @Override
+    public String toString() {
+        return "Lemming!";
+    }
+    
+    
 }

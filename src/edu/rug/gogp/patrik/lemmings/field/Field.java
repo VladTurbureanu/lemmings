@@ -1,16 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.rug.gogp.patrik.lemmings.field;
 
-import edu.rug.gogp.patrik.lemmings.view.FieldView;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,14 +11,13 @@ import java.util.logging.Logger;
  */
 public class Field extends Observable implements Runnable {
 
-    ServerSocket sSocket;
+    ServerSocket serverSocket;
 
     public Field(int serverPort) throws IOException {
-        this.sSocket = new ServerSocket(serverPort);
-
+        this.serverSocket = new ServerSocket(serverPort);
     }
 
-    public synchronized void dummy2() {
+    public void dummy2() {
         this.setChanged();
         this.notifyObservers();
     }
@@ -35,11 +27,11 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getAddress() {
-        return sSocket.getInetAddress().getHostAddress().toString();
+        return serverSocket.getInetAddress().getCanonicalHostName();
     }
 
     public String getPort() {
-        return sSocket.getLocalPort() + "";
+        return serverSocket.getLocalPort() + "";
     }
 
     public String getNumberOfLemmings() {
@@ -59,8 +51,7 @@ public class Field extends Observable implements Runnable {
         try {
             int i = 1;
             while (true) {
-                Socket incoming = sSocket.accept();
-                System.out.println("Spawning " + i);
+                Socket incoming = serverSocket.accept();
                 Thread t = new InputHandler(incoming, i);
                 t.start();
                 i++;
