@@ -14,8 +14,8 @@ public class Lemmings {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         Field field;
-         Field field2;
+        Field field;
+        Field field2;
         try {
             field = new Field(25565);
             Thread t = new Thread(field);
@@ -34,6 +34,6 @@ public class Lemmings {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 }

@@ -13,13 +13,16 @@ import java.util.logging.Logger;
  * @author Rik Schaaf
  */
 public class FieldConnector {
+
     Socket s;
     private String address = "localhost";
     private int port;
+
     public FieldConnector(int port) {
         this.port = port;
     }
-    public void send(Lemming l){
+
+    public void send(Lemming l) {
         try {
             s = new Socket(address, port);
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
