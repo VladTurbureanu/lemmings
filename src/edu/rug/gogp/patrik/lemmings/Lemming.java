@@ -1,7 +1,7 @@
 package edu.rug.gogp.patrik.lemmings;
 
-import edu.rug.gogp.patrik.lemmings.field.Field;
-import edu.rug.gogp.patrik.lemmings.field.FieldConnector;
+import edu.rug.gogp.patrik.lemmings.model.Field;
+import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;
 import java.io.Serializable;
 
 /**
@@ -9,8 +9,16 @@ import java.io.Serializable;
  * @author Rik Schaaf
  */
 public class Lemming extends Thread implements Serializable {
-    public void verhuis(Field field){
-        FieldConnector fc = new FieldConnector(Integer.parseInt(field.getPort()));
+
+    transient private Field field;
+
+    public Lemming(Field field) {
+        this.field = field;
+    }
+    
+
+    public void verhuis(Field fieldTo) {
+        FieldConnector fc = new FieldConnector(Integer.parseInt(fieldTo.getPort()));
         fc.send(this);
     }
 
@@ -18,6 +26,4 @@ public class Lemming extends Thread implements Serializable {
     public String toString() {
         return "Lemming!";
     }
-    
-    
 }

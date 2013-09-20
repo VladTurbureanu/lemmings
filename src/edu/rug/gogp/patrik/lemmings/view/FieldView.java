@@ -2,7 +2,7 @@ package edu.rug.gogp.patrik.lemmings.view;
 
 import java.util.Observable;
 import java.util.Observer;
-import edu.rug.gogp.patrik.lemmings.field.Field;
+import edu.rug.gogp.patrik.lemmings.model.Field;
 import javax.swing.JFrame;
 
 

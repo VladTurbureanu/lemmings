@@ -1,4 +1,4 @@
-package edu.rug.gogp.patrik.lemmings.field;
+package edu.rug.gogp.patrik.lemmings.controller;
 
 import edu.rug.gogp.patrik.lemmings.Lemming;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.net.Socket;
  *
  * @author Rik Schaaf
  */
-class InputHandler extends Thread {
+public class InputHandler extends Thread {
     private Socket incoming;
     private int counter;
     
