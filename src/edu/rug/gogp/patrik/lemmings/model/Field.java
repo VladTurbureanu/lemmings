@@ -15,7 +15,7 @@ import java.util.Observable;
 public class Field extends Observable implements Runnable {
 
     private ServerSocket serverSocket;
-    private ArrayList<FieldConnector> fieldConnectors = new ArrayList<>();
+    private FieldMap fieldMap;
 
     public Field(int serverPort) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -50,26 +50,26 @@ public class Field extends Observable implements Runnable {
         return "<geen velden>";
     }
 
-    public void addFieldConnector(FieldConnector fieldConnector) {
-        fieldConnectors.add(fieldConnector);
-    }
-    
-    public void removeFieldConnector(FieldConnector fieldConnector) {
-        fieldConnectors.remove(fieldConnector);
-    }
-
     @Override
     public void run() {
         try {
             int i = 1;
             while (true) {
                 Socket incoming = serverSocket.accept();
-                Thread t = new InputHandler(incoming, i);
+                Thread t = new InputHandler(incoming, i, this);
                 t.start();
                 i++;
             }
         } catch (IOException ex) {
             ex.printStackTrace();//Logger.getLogger(Field.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public FieldMap getFieldMap() {
+        return fieldMap;
+    }
+
+    public void addLemming(Lemming lemming) {
+        throw new UnsupportedOperationException("Not supported yet."); //TODO make this method
     }
 }

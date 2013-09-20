@@ -3,6 +3,7 @@ package edu.rug.gogp.patrik.lemmings.controller;
 import edu.rug.gogp.patrik.lemmings.model.Lemming;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -10,9 +11,8 @@ import java.net.UnknownHostException;
  *
  * @author Rik Schaaf
  */
-public class FieldConnector {
+public class FieldConnector implements Serializable {
 
-    Socket s;
     private String address = "localhost";
     private int port;
 
@@ -21,6 +21,7 @@ public class FieldConnector {
     }
 
     public void send(Lemming lemming) {
+        Socket s;
         try {
             s = new Socket(address, port);
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());

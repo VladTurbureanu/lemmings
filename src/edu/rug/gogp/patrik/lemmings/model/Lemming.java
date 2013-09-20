@@ -10,12 +10,7 @@ import java.io.Serializable;
  */
 public class Lemming extends Thread implements Serializable {
 
-    transient private Field field;
-
-    public Lemming(Field field) {
-        this.field = field;
-    }
-    
+    private FieldMap fieldMap;
 
     public void verhuis(Field fieldTo) {
         FieldConnector fc = new FieldConnector(Integer.parseInt(fieldTo.getPort()));
