@@ -1,6 +1,7 @@
-package edu.rug.gogp.patrik.lemmings.model;
+package edu.rug.gogp.patrik.lemmings;
 
-import edu.rug.gogp.patrik.lemmings.Lemming;
+import edu.rug.gogp.patrik.lemmings.model.Lemming;
+import edu.rug.gogp.patrik.lemmings.model.Field;
 import edu.rug.gogp.patrik.lemmings.model.Field;
 import edu.rug.gogp.patrik.lemmings.view.FieldView;
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class Lemmings {
             t.start();
             t2.start();
             Lemming l = new Lemming(field);
-            field.addFieldConnector(l);
             FieldView fv = new FieldView(field);
             FieldView fv2 = new FieldView(field2);
             fv.setVisible(true);

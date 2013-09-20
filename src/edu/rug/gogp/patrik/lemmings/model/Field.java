@@ -1,7 +1,7 @@
 package edu.rug.gogp.patrik.lemmings.model;
 
 import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
-import edu.rug.gogp.patrik.lemmings.Lemming;
+import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,7 +15,7 @@ import java.util.Observable;
 public class Field extends Observable implements Runnable {
 
     private ServerSocket serverSocket;
-    private ArrayList<Lemming> fieldConnectors = new ArrayList<>();
+    private ArrayList<FieldConnector> fieldConnectors = new ArrayList<>();
 
     public Field(int serverPort) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -50,11 +50,11 @@ public class Field extends Observable implements Runnable {
         return "<geen velden>";
     }
 
-    public void addFieldConnector(Lemming fieldConnector) {
+    public void addFieldConnector(FieldConnector fieldConnector) {
         fieldConnectors.add(fieldConnector);
     }
     
-    public void removeFieldConnector(Lemming fieldConnector) {
+    public void removeFieldConnector(FieldConnector fieldConnector) {
         fieldConnectors.remove(fieldConnector);
     }
 

@@ -1,4 +1,4 @@
-package edu.rug.gogp.patrik.lemmings;
+package edu.rug.gogp.patrik.lemmings.model;
 
 import edu.rug.gogp.patrik.lemmings.model.Field;
 import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;

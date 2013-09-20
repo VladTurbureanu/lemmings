@@ -1,6 +1,6 @@
 package edu.rug.gogp.patrik.lemmings.controller;
 
-import edu.rug.gogp.patrik.lemmings.Lemming;
+import edu.rug.gogp.patrik.lemmings.model.Lemming;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
