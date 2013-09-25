@@ -1,11 +1,9 @@
 package edu.rug.gogp.patrik.lemmings.model;
 
 import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
-import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Observable;
 
 /**

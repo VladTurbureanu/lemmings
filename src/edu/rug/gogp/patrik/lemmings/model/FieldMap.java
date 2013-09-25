@@ -9,6 +9,6 @@ import java.util.ArrayList;
  * @author Rik Schaaf
  */
 public class FieldMap implements Serializable {
-
     private ArrayList<FieldConnector> fieldConnectors = new ArrayList<>();
+
 }
