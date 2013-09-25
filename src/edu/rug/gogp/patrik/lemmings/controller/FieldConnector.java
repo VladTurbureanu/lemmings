@@ -25,7 +25,8 @@ public class FieldConnector implements Serializable {
         try {
             s = new Socket(address, port);
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-            out.writeObject(lemming);
+            System.out.println("lala");
+            out.writeInt(InputHandler.MOVE_LEMMING);
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

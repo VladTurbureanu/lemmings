@@ -29,7 +29,7 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getAddress() {
-        return serverSocket.getInetAddress().getCanonicalHostName();
+        return serverSocket.getInetAddress().getHostAddress();
     }
 
     public String getPort() {
@@ -51,15 +51,13 @@ public class Field extends Observable implements Runnable {
     @Override
     public void run() {
         try {
-            int i = 1;
             while (true) {
                 Socket incoming = serverSocket.accept();
-                Thread t = new InputHandler(incoming, i, this);
+                Thread t = new InputHandler(incoming, this);
                 t.start();
-                i++;
             }
         } catch (IOException ex) {
-            ex.printStackTrace();//Logger.getLogger(Field.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
