@@ -1,19 +1,24 @@
 package edu.rug.gogp.patrik.lemmings.model;
 
+import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;
 import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.Observable;
+import java.util.Set;
 
 /**
  *
  * @author s2288842
  */
 public class Field extends Observable implements Runnable {
-
+    private int capacity = 5;
     private ServerSocket serverSocket;
     private FieldMap fieldMap;
+    private Set<Lemming> lemmings = new HashSet<>();
+    
 
     public Field(int serverPort) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -25,7 +30,7 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getCapacity() {
-        return "0";
+        return capacity + "";
     }
 
     public String getAddress() {
@@ -37,7 +42,7 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getNumberOfLemmings() {
-        return "0";
+        return lemmings.size() + "";
     }
 
     public String getLemmingsListing() {
