@@ -9,21 +9,30 @@ import java.io.Serializable;
  * @author Rik Schaaf
  */
 public class Lemming extends Thread implements Serializable {
-
+    
     private FieldMap fieldMap;
-    private FieldConnector currentField;
+    private AddressElement currentField;
+    
+    public Lemming(AddressElement address) {
+        this.currentField = address;
+        fieldMap = new FieldMap();
+        fieldMap.addServer(address);
+    }
     
     public void verhuis(Field fieldTo) {
-        FieldConnector fc = new FieldConnector(Integer.parseInt(fieldTo.getPort()));
-        FieldMap serverMap = fc.getFieldMap();
-        for (AddressElement addressElement : serverMap.getServerAddresses()) {
-            if (!fieldMap.hasServer(addressElement)) {
-                fieldMap.addServer(addressElement);
-            }
-        }
-        fc.send(this);
+        FieldConnector fieldToConnector = new FieldConnector(fieldTo.getFieldAddress());
+        FieldConnector currentFieldConnector = new FieldConnector(currentField);
+        System.out.println("verhuised!");
+        FieldMap serverMap = currentFieldConnector.getFieldMap();
+        System.out.println("verhuised!");
+        fieldMap.union(serverMap);
+        System.out.println("verhuised123!");
+        fieldToConnector.send(this);
+        System.out.println("verhuised!");
+        fieldToConnector.setFieldMap(fieldMap);
+        System.out.println("verhuised!");
     }
-
+    
     @Override
     public String toString() {
         return "Lemming!";

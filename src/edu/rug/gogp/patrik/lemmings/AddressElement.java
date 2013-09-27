@@ -4,11 +4,13 @@
  */
 package edu.rug.gogp.patrik.lemmings;
 
+import java.io.Serializable;
+
 /**
  *
  * @author s2288842
  */
-public class AddressElement{
+public class AddressElement implements Serializable{
 
     private String serverName;
     private Integer serverPort;
@@ -24,7 +26,7 @@ public class AddressElement{
     }
 
     public boolean hasServerName(String serverName) {
-        if (serverName == serverName) {
+        if (this.serverName == serverName) {
             return true;
         }
         return false;

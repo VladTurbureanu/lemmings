@@ -4,7 +4,6 @@ import edu.rug.gogp.patrik.lemmings.model.Lemming;
 import edu.rug.gogp.patrik.lemmings.model.Field;
 import edu.rug.gogp.patrik.lemmings.view.FieldView;
 import java.io.IOException;
-
 /**
  *
  * @author s2288842
@@ -24,7 +23,7 @@ public class Lemmings {
             Thread t2 = new Thread(field2);
             t.start();
             t2.start();
-            Lemming l = new Lemming();
+            Lemming l = new Lemming(field.getFieldAddress());
             FieldView fv = new FieldView(field);
             FieldView fv2 = new FieldView(field2);
             fv.setVisible(true);

@@ -1,11 +1,11 @@
 package edu.rug.gogp.patrik.lemmings.controller;
 
+import edu.rug.gogp.patrik.lemmings.AddressElement;
 import edu.rug.gogp.patrik.lemmings.model.FieldMap;
 import edu.rug.gogp.patrik.lemmings.model.Lemming;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -13,46 +13,54 @@ import java.net.UnknownHostException;
  *
  * @author Rik Schaaf
  */
-public class FieldConnector implements Serializable {
+public class FieldConnector{
 
-    private String address = "localhost";
-    private int port;
+    private Socket s;
 
-    public FieldConnector(int port) {
-        this.port = port;
-    }
-
-    public void send(Lemming lemming) {
-        Socket s;
+    public FieldConnector(AddressElement address) {
         try {
-            s = new Socket(address, port);
-            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-            
-            out.writeInt(InputHandler.MOVE_LEMMING);
-            out.close();
+            s = new Socket(address.getServerName(), address.getServerPort());
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    } 
-    
-    public FieldMap getFieldMap() {
-        Socket s;
+    }
+
+    public void send(Lemming lemming) {
         try {
-            s = new Socket(address, port);
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             out.writeInt(InputHandler.MOVE_LEMMING);
-            out.close();
-            return (FieldMap) in.readObject();
+            out.writeObject(lemming);
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public FieldMap getFieldMap() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeInt(InputHandler.GET_FIELDMAP);
+            out.flush();
+            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
+            return (FieldMap) in.readObject();
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public void setFieldMap(FieldMap fieldMap) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeInt(InputHandler.SET_FIELDMAP);
+            out.writeObject(fieldMap);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
