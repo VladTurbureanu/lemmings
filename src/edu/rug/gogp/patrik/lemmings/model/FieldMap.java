@@ -11,28 +11,26 @@ import java.util.ArrayList;
 public class FieldMap implements Serializable {
     private ArrayList<AddressElement> serverAdresses = new ArrayList<>();
 
-    public synchronized void addServer(String serverName, int serverPort) {
-        AddressElement newElement = new AddressElement(serverName, serverPort);
-        serverAdresses.add(newElement);
+  
+
+    public synchronized void addServer(AddressElement address) {
+       serverAdresses.add(address);
     }
 
-    public void addServer(AddressElement address) {
-        addServer(address.getServerName(), address.getServerPort());
-    }
+    
 
-    public synchronized boolean hasServer(String serverName, int serverPort) {
-        for (AddressElement linkedElement : serverAdresses) {
-            if (linkedElement.hasServerName(serverName)) {
-                if (linkedElement.hasServerPort(serverPort)) {
+    public synchronized boolean hasServer(AddressElement address) {
+        for (AddressElement addressElement : serverAdresses) {
+            System.out.println(addressElement + ":" + address);
+            if (addressElement.hasServerPort(address.getServerPort())) {
+                if (addressElement.hasServerName(address.getServerName())) {
+                    System.out.println("true");
                     return true;
                 }
             }
         }
+        System.out.println("false");
         return false;
-    }
-
-    public boolean hasServer(AddressElement address) {
-        return hasServer(address.getServerName(), address.getServerPort());
     }
 
     public ArrayList<AddressElement> getServerAddresses() {
@@ -44,10 +42,18 @@ public class FieldMap implements Serializable {
     }
 
     public synchronized void union(FieldMap fieldMap) {
+        System.out.println("\n\n:begin\n");
+        for (AddressElement addressElement : serverAdresses) {
+            System.out.println(addressElement);
+        }
         for (AddressElement addressElement : fieldMap.getServerAddresses()) {
             if (!hasServer(addressElement)) {
                 addServer(addressElement);
             }
+        }
+        System.out.println("\n\n:end\n");
+        for (AddressElement addressElement : serverAdresses) {
+            System.out.println(addressElement);
         }
     }
 }

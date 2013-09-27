@@ -27,27 +27,29 @@ public class InputHandler extends Thread {
 
     @Override
     public void run() {
-        try {
-            ObjectInputStream in = new ObjectInputStream(incoming.getInputStream());
-            ObjectOutputStream out;
-            int inputInt = in.readInt();
-            switch (inputInt){
-                case MOVE_LEMMING:
-                    field.addLemming((Lemming) in.readObject());
-                    break;
-                case GET_FIELDMAP:
-                    out = new ObjectOutputStream(incoming.getOutputStream()); 
-                    out.writeObject(field.getFieldMap());
-                    out.close();
-                    break;
-                case SET_FIELDMAP:
-                    field.unionFieldMap((FieldMap) in.readObject());
-                    break;
+        while (true) {
+            try {
+                ObjectInputStream in = new ObjectInputStream(incoming.getInputStream());
+                ObjectOutputStream out;
+                int inputInt = in.readInt();
+                switch (inputInt) {
+                    case MOVE_LEMMING:
+                        field.addLemming((Lemming) in.readObject());
+                        break;
+                    case GET_FIELDMAP:
+                        out = new ObjectOutputStream(incoming.getOutputStream());
+                        out.writeObject(field.getFieldMap());
+                        out.flush();
+                        break;
+                    case SET_FIELDMAP:
+                        field.unionFieldMap((FieldMap) in.readObject());
+                        break;
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();//Logger.getLogger(InputHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();//Logger.getLogger(InputHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
         }
     }
 }

@@ -26,14 +26,14 @@ public class AddressElement implements Serializable{
     }
 
     public boolean hasServerName(String serverName) {
-        if (this.serverName == serverName) {
+        if (this.serverName.equals(serverName)) {
             return true;
         }
         return false;
     }
 
     public boolean hasServerPort(Integer serverPort) {
-        if (serverPort == serverPort) {
+        if (this.serverPort.equals(serverPort)) {
             return true;
         }
         return false;
@@ -45,5 +45,10 @@ public class AddressElement implements Serializable{
 
     public Integer getServerPort() {
         return serverPort;
+    }
+
+    @Override
+    public String toString() {
+        return serverName + ":" + serverPort;
     }
 }

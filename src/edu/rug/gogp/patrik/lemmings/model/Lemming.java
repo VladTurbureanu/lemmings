@@ -19,18 +19,14 @@ public class Lemming extends Thread implements Serializable {
         fieldMap.addServer(address);
     }
     
-    public void verhuis(Field fieldTo) {
+    public synchronized void verhuis(Field fieldTo) {
         FieldConnector fieldToConnector = new FieldConnector(fieldTo.getFieldAddress());
         FieldConnector currentFieldConnector = new FieldConnector(currentField);
-        System.out.println("verhuised!");
         FieldMap serverMap = currentFieldConnector.getFieldMap();
-        System.out.println("verhuised!");
         fieldMap.union(serverMap);
-        System.out.println("verhuised123!");
         fieldToConnector.send(this);
-        System.out.println("verhuised!");
         fieldToConnector.setFieldMap(fieldMap);
-        System.out.println("verhuised!");
+        currentField = fieldTo.getFieldAddress();
     }
     
     @Override

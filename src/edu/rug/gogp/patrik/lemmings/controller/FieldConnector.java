@@ -32,6 +32,7 @@ public class FieldConnector{
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.MOVE_LEMMING);
             out.writeObject(lemming);
+            out.flush();
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -55,10 +56,12 @@ public class FieldConnector{
     }
 
     public void setFieldMap(FieldMap fieldMap) {
+       
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.SET_FIELDMAP);
             out.writeObject(fieldMap);
+            out.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package edu.rug.gogp.patrik.lemmings.model;
 
 import edu.rug.gogp.patrik.lemmings.AddressElement;
-import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;
 import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -24,7 +23,7 @@ public class Field extends Observable implements Runnable {
     public Field(int serverPort) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
         fieldMap = new FieldMap();
-        fieldMap.addServer(getAddress(), serverPort);
+        fieldMap.addServer(getFieldAddress());
     }
     
     public void dummy2() {
@@ -57,7 +56,11 @@ public class Field extends Observable implements Runnable {
     }
     
     public String getFieldsListing() {
-        return "<geen velden>";
+        String returnString = "";
+        for (AddressElement addressElement : fieldMap.getServerAddresses()) {
+            returnString = addressElement.toString() + "\n";
+        }
+        return returnString;
     }
     
     @Override
@@ -79,10 +82,15 @@ public class Field extends Observable implements Runnable {
     
     public void addLemming(Lemming lemming) {
         lemmings.add(lemming);
+        dummy2();
     }
     
     public synchronized void unionFieldMap(FieldMap fieldMap) {
         this.fieldMap.union(fieldMap);
+        for (AddressElement addressElement : fieldMap.getServerAddresses()) {
+            System.out.println(addressElement);
+        }
+        dummy2();
     }
     
     public AddressElement getFieldAddress(){
