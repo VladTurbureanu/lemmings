@@ -23,7 +23,7 @@ public class Lemmings {
     public static void main(String[] args) {
         generateFields();
         generateFieldMaps();
-        generateLemmings();
+        generateLemmings(4);
     }
 
     public static void generateFields() {
@@ -66,9 +66,12 @@ public class Lemmings {
         return null;
     }
 
-    private static void generateLemmings() {
+    private static void generateLemmings(int amount) {
         Random random = new Random();
         Field birthField = fields.get(random.nextInt(FIELDS_AMOUNT));
-        birthField.addLemming(new Lemming(birthField, 0));
+        for (int i = 0; i < amount; i++) {
+            birthField.addLemming(new Lemming(birthField, i));
+        }
+        
     }
 }
