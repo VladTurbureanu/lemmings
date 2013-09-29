@@ -21,9 +21,12 @@ public class FieldConnector {
         try {
             s = new Socket(address.getServerName(), address.getServerPort());
         } catch (UnknownHostException ex) {
-            ex.printStackTrace();
+            System.out.println("Could not initialize a host.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
     }
 
@@ -36,9 +39,12 @@ public class FieldConnector {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             return in.readBoolean();
         } catch (UnknownHostException ex) {
-            ex.printStackTrace();
+            System.out.println("Could not initialize a host.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
         return false;
     }
@@ -51,9 +57,12 @@ public class FieldConnector {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             return (FieldMap) in.readObject();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println("The object read was not in the format exspected.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
         return null;
     }
@@ -66,7 +75,9 @@ public class FieldConnector {
             out.writeObject(fieldMap);
             out.flush();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
     }
 
@@ -79,34 +90,40 @@ public class FieldConnector {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             return in.readBoolean();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
         return false;
     }
-    
-    public void closeConnection(){
+
+    public void closeConnection() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.CLOSE_CONNECTION);
             out.flush();
             s.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
     }
-    
-    public void removeLemming(Lemming lemming){
+
+    public void removeLemming(Lemming lemming) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.REMOVE_LEMMING);
             out.writeObject(lemming);
             out.flush();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
     }
-    
-    public String getName(){
+
+    public String getName() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.GET_NAME);
@@ -114,9 +131,12 @@ public class FieldConnector {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             return (String) in.readObject();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A error accured when reading or writing.");
+            System.out.println("More information follows.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println("The object read was not in the format exspected.");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
         return "";
     }
