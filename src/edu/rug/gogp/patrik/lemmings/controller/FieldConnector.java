@@ -29,17 +29,20 @@ public class FieldConnector {
         }
     }
 
-    public void send(Lemming lemming) {
+    public boolean send(Lemming lemming) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.MOVE_LEMMING);
             out.writeObject(lemming);
             out.flush();
+            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
+            return in.readBoolean();
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     public FieldMap getFieldMap() {

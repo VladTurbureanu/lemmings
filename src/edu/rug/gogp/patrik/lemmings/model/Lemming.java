@@ -28,14 +28,16 @@ public class Lemming extends Thread implements Serializable {
         this.start();
     }
 
-    public synchronized void move(Field fieldTo) {
-        FieldConnector fieldToConnector = new FieldConnector(fieldTo.getFieldAddress());
+    public synchronized void move(AddressElement fieldToAddress) {
+        FieldConnector fieldToConnector = new FieldConnector(fieldToAddress);
         FieldConnector currentFieldConnector = new FieldConnector(currentField);
         FieldMap serverMap = currentFieldConnector.getFieldMap();
         fieldMap.union(serverMap);
-        fieldToConnector.send(this);
+        if(fieldToConnector.send(this)){
+            
+        }
         fieldToConnector.setFieldMap(fieldMap);
-        currentField = fieldTo.getFieldAddress();
+        currentField = fieldToAddress;
         fieldToConnector.closeConnection();
         currentFieldConnector.closeConnection();
     }
@@ -61,7 +63,9 @@ public class Lemming extends Thread implements Serializable {
                     break;
                 case MOVE:
                     int randomField = rand.nextInt(fieldMap.getServerAddresses().size());
-                    
+                    if (fieldMap.getServerAddress(randomField) != currentField) {
+                        move(fieldMap.getServerAddress(randomField));
+                    }
                     break;
             }
             currentFieldConnector.closeConnection();

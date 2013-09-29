@@ -46,4 +46,8 @@ public class FieldMap implements Serializable {
             }
         }
     }
+
+    public AddressElement getServerAddress(int randomField) {
+        return serverAdresses.get(randomField);
+    }
 }
