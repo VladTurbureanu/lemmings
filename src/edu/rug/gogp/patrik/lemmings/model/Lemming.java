@@ -32,8 +32,10 @@ public class Lemming extends Thread implements Serializable {
         FieldConnector currentFieldConnector = new FieldConnector(currentField);
         FieldMap serverMap = currentFieldConnector.getFieldMap();
         fieldMap.union(serverMap);
-        if(fieldToConnector.send(this)){
-            
+        if (!fieldToConnector.send(this)) {
+            currentFieldConnector.closeConnection();
+            fieldToConnector.closeConnection();
+            return;
         }
         fieldToConnector.setFieldMap(fieldMap);
         currentField = fieldToAddress;

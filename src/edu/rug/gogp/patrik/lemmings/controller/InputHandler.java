@@ -40,8 +40,9 @@ public class InputHandler extends Thread {
                 int inputInt = in.readInt();
                 switch (inputInt) {
                     case MOVE_LEMMING:
-                        
-                        field.addLemming((Lemming) in.readObject());
+                        out = new ObjectOutputStream(incoming.getOutputStream());
+                        out.writeBoolean(field.addLemming((Lemming) in.readObject()));
+                        out.flush();
                         break;
                     case GET_FIELDMAP:
                         out = new ObjectOutputStream(incoming.getOutputStream());
@@ -53,11 +54,7 @@ public class InputHandler extends Thread {
                         break;
                     case NEW_CHILD:
                         out = new ObjectOutputStream(incoming.getOutputStream());
-                        if (!field.newClild((Lemming) in.readObject())) {
-                            out.writeBoolean(false);
-                        } else {
-                            out.writeBoolean(true);
-                        }
+                        out.writeBoolean(field.newClild((Lemming) in.readObject()));
                         out.flush();
 
                         break;
