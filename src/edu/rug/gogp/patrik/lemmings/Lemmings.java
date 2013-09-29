@@ -1,13 +1,10 @@
 package edu.rug.gogp.patrik.lemmings;
 
-import edu.rug.gogp.patrik.lemmings.model.Lemming;
 import edu.rug.gogp.patrik.lemmings.model.Field;
 import edu.rug.gogp.patrik.lemmings.view.FieldView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

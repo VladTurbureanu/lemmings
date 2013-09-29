@@ -8,12 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Rik Schaaf
  */
-public class FieldConnector{
+public class FieldConnector {
 
     private Socket s;
 
@@ -56,7 +58,7 @@ public class FieldConnector{
     }
 
     public void setFieldMap(FieldMap fieldMap) {
-       
+
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.SET_FIELDMAP);
@@ -64,6 +66,30 @@ public class FieldConnector{
             out.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public boolean askForChild(Lemming lemming) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeInt(InputHandler.NEW_CHILD);
+            out.flush();
+            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
+            return in.readBoolean();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public void closeConnection(){
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeInt(InputHandler.CLOSE_CONNECTION);
+            out.flush();
+            s.close();
+        } catch (IOException ex) {
+            Logger.getLogger(FieldConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

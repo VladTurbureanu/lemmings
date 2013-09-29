@@ -17,6 +17,8 @@ public class InputHandler extends Thread {
     public static final int MOVE_LEMMING = 0;
     public static final int GET_FIELDMAP = 1;
     public static final int SET_FIELDMAP = 2;
+    public static final int NEW_CHILD = 3;
+    public static final int CLOSE_CONNECTION = 4;
     private Socket incoming;
     private Field field;
 
@@ -29,6 +31,10 @@ public class InputHandler extends Thread {
     public void run() {
         while (true) {
             try {
+                if (incoming.isClosed()) {
+                    this.interrupt();
+                    return;
+                }
                 ObjectInputStream in = new ObjectInputStream(incoming.getInputStream());
                 ObjectOutputStream out;
                 int inputInt = in.readInt();
@@ -43,6 +49,20 @@ public class InputHandler extends Thread {
                         break;
                     case SET_FIELDMAP:
                         field.unionFieldMap((FieldMap) in.readObject());
+                        break;
+                    case NEW_CHILD:
+                        System.out.println("hier2");
+                        out = new ObjectOutputStream(incoming.getOutputStream());
+                        if (!field.newClild()) {
+                            out.writeBoolean(false);
+                        } else {
+                            out.writeBoolean(true);
+                        }
+                        out.flush();
+
+                        break;
+                    case CLOSE_CONNECTION:
+                        incoming.close();
                         break;
                 }
             } catch (IOException ex) {
