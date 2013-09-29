@@ -74,14 +74,12 @@ public class Lemming extends Thread implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        System.out.println("aanroep");
         if (!(obj instanceof Lemming)) {
             return false;
         }
         Lemming lemming = (Lemming) obj;
         if (lemming.getBirthPlace().equals(birthPlace)) {
             if (lemming.lemmingNo() == lemmingNo) {
-                System.out.println("true");
                 return true;
             }
         }
