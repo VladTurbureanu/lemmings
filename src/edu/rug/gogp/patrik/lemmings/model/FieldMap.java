@@ -15,6 +15,7 @@ public class FieldMap implements Serializable {
 
     public synchronized void addServer(AddressElement address) {
        serverAdresses.add(address);
+       
     }
 
     
