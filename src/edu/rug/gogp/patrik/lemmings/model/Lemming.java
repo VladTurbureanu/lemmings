@@ -22,7 +22,7 @@ public class Lemming extends Thread implements Serializable {
     public Lemming(Field birthField) {
         this.currentField = birthField.getFieldAddress();
         fieldMap = new FieldMap();
-        fieldMap.addServer(birthField.getFieldAddress());
+        fieldMap.union(birthField.getFieldMap());
         this.birthPlace = birthField.getFieldName();
         this.start();
     }
