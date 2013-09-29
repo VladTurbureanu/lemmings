@@ -1,6 +1,7 @@
 package edu.rug.gogp.patrik.lemmings;
 
 import edu.rug.gogp.patrik.lemmings.model.Field;
+import edu.rug.gogp.patrik.lemmings.model.Lemming;
 import edu.rug.gogp.patrik.lemmings.view.FieldView;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Lemmings {
     public static void main(String[] args) {
         generateFields();
         generateFieldMaps();
+        generateLemmings();
     }
 
     public static void generateFields() {
@@ -44,7 +46,7 @@ public class Lemmings {
     public static void generateFieldMaps(){
         Random random = new Random();
         for (Field field : fields) {
-            for (int i = 0; i < random.nextInt(FIELDS_AMOUNT); i++) {
+            for (int i = 0; i < random.nextInt(FIELDS_AMOUNT/2); i++) {
                 Field mapField = fields.get(random.nextInt(FIELDS_AMOUNT));
                 if(!mapField.equals(field)){
                     field.addServer(mapField.getFieldAddress());
@@ -63,5 +65,11 @@ public class Lemmings {
         }
         System.out.println("Mislukt!");
         return null;
+    }
+
+    private static void generateLemmings() {
+        Random random = new Random();
+        Field birthField = fields.get(random.nextInt(FIELDS_AMOUNT));
+        birthField.addLemming(new Lemming(birthField, 0));
     }
 }
