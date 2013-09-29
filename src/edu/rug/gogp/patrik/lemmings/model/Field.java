@@ -15,12 +15,12 @@ import java.util.Set;
  */
 public class Field extends Observable implements Runnable {
 
-    private int capacity = 5;
+    private int capacity = 10;
     private ServerSocket serverSocket;
     private FieldMap fieldMap;
     private Set<Lemming> lemmings = new HashSet<>();
     private String name;
-    private int counter = 1;
+    private int counter = 5;
 
     public Field(int serverPort, String name) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -110,7 +110,7 @@ public class Field extends Observable implements Runnable {
     public synchronized boolean newClild(Lemming lemming) {
         lemmings.add(new Lemming(this, counter));
         counter++;
-        if (lemmings.size() >= capacity) {
+        if (lemmings.size() > capacity) {
             lemmings.remove(lemming);
             dummy2();
             return false;
