@@ -11,13 +11,13 @@ import java.util.Random;
  */
 public class Lemming extends Thread implements Serializable {
 
-    private FieldMap fieldMap;
+    private final FieldMap fieldMap;
     private AddressElement currentField;
-    private String birthPlace;
+    private final String birthPlace;
     private static final int GET_CHILD = 0;
     private static final int MOVE = 1;
     private static final int SLEEP = 2;
-    private static final int[] POSIBLE_ACTIONS = {GET_CHILD, MOVE, SLEEP};
+    private static final int[] POSIBLE_ACTIONS = {GET_CHILD, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, SLEEP, SLEEP};
     private int lemmingNo;
 
     public Lemming(Field birthField) {
@@ -56,43 +56,39 @@ public class Lemming extends Thread implements Serializable {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         while (true) {
             Random rand = new Random();
             try {
-                this.wait(rand.nextInt(2000) + 1000);
+                sleep(rand.nextInt(2000) + 1000);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                System.out.println("A error occured when the lemming was waiting before taking the next action");
+                System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
             }
             int randomAction = rand.nextInt(POSIBLE_ACTIONS.length);
-            switch (randomAction) {
+            switch (POSIBLE_ACTIONS[randomAction]) {
                 case GET_CHILD:
-                    System.out.println("a baby! " + birthPlace + ":" + lemmingNo);
                     FieldConnector currentFieldConnector = new FieldConnector(currentField);
                     if (!currentFieldConnector.askForChild(this)) {
-                        System.out.println("need to make place for my baby " + birthPlace + ":" + lemmingNo);
                         currentFieldConnector.closeConnection();
                         return;
                     }
                     currentFieldConnector.closeConnection();
                     break;
                 case MOVE:
-                    System.out.println("Time to Move: " + birthPlace + ":" + lemmingNo);
                     int randomField = rand.nextInt(fieldMap.getServerAddresses().size());
                     if (!fieldMap.getServerAddress(randomField).equals(currentField)) {
-                        System.out.println("found another field! " + birthPlace + ":" + lemmingNo);
                         if (!move(fieldMap.getServerAddress(randomField))) {
-                            System.out.println("this field is full :( " + birthPlace + ":" + lemmingNo);
                             return;
                         }
                     }
                     break;
                 case SLEEP:
-                    System.out.println("i feel sleepy: " + birthPlace + ":" + lemmingNo);
                     try {
-                    this.wait(rand.nextInt(10000));
+                    sleep(rand.nextInt(10000));
                 } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    System.out.println("A error occured when the lemming was sleeping");
+                    System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
                 }
                     break;
             }
@@ -127,7 +123,7 @@ public class Lemming extends Thread implements Serializable {
 
     @Override
     public int hashCode() {
-        return 1;
+        return lemmingNo;
     }
 
 }

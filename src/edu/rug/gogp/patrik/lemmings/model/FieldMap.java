@@ -11,15 +11,10 @@ import java.util.ArrayList;
 public class FieldMap implements Serializable {
     private ArrayList<AddressElement> serverAdresses = new ArrayList<>();
 
-  
-
     public synchronized void addServer(AddressElement address) {
        serverAdresses.add(address);
-       
     }
-
     
-
     public synchronized boolean hasServer(AddressElement address) {
         for (AddressElement addressElement : serverAdresses) {
             if (addressElement.hasServerPort(address.getServerPort())) {

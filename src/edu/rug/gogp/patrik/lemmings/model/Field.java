@@ -6,7 +6,6 @@ import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
@@ -32,22 +31,12 @@ public class Field extends Observable implements Runnable {
         this.name = name;
     }
 
-    @Deprecated
-    public void dummy2() {
-        this.setChanged();
-        this.notifyObservers();
-    }
-
-    public int getCounter() {
+    public synchronized int getCounter() {
         return counter;
     }
 
-    public void incCounter() {
+    public synchronized void incCounter() {
         this.counter++;
-    }
-
-    public void incCounter(int counter) {
-        this.counter += counter;
     }
 
     public String getCapacity() {
@@ -67,10 +56,14 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getNumberOfLemmings() {
+        return lemmings.size() + "";
+    }
+
+    public String getDeadLemmings() {
         return deadLemming + "";
     }
 
-    public String getLemmingsListing() {
+    public synchronized String getLemmingsListing() {
         String returnString = "";
         for (Lemming lemming : lemmings) {
             returnString += lemming.toString() + "\n";
@@ -78,7 +71,7 @@ public class Field extends Observable implements Runnable {
         return returnString;
     }
 
-    public String getFieldsListing() {
+    public synchronized String getFieldsListing() {
         String returnString = "";
         for (AddressElement addressElement : fieldMap.getServerAddresses()) {
             FieldConnector fc = new FieldConnector(addressElement);
@@ -97,7 +90,8 @@ public class Field extends Observable implements Runnable {
                 t.start();
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("A connection could not be established");
+            System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
         }
     }
 
@@ -111,19 +105,21 @@ public class Field extends Observable implements Runnable {
             return false;
         }
         lemmings.add(lemming);
-        counter++;
-        dummy2();
+        this.setChanged();
+        this.notifyObservers();
         return true;
     }
-    
-     public synchronized void removeLemming(Lemming lemming) {
+
+    public synchronized void removeLemming(Lemming lemming) {
         lemmings.remove(lemming);
-        dummy2();
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public synchronized void unionFieldMap(FieldMap fieldMap) {
         this.fieldMap.union(fieldMap);
-        dummy2();
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public AddressElement getFieldAddress() {
@@ -142,17 +138,20 @@ public class Field extends Observable implements Runnable {
         if (lemmings.size() > capacity) {
             lemmings.remove(lemming);
             deadLemming++;
-            dummy2();
+            this.setChanged();
+            this.notifyObservers();
             return false;
         }
-        dummy2();
+        this.setChanged();
+        this.notifyObservers();
         return true;
     }
 
-    public void addServer(AddressElement fieldAddress) {
+    public synchronized void addServer(AddressElement fieldAddress) {
         FieldMap newFM = new FieldMap();
         newFM.addServer(fieldAddress);
         fieldMap.union(newFM);
-        dummy2();
+        this.setChanged();
+        this.notifyObservers();
     }
 }

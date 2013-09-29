@@ -46,6 +46,7 @@ public class FieldView extends JFrame implements Observer {
         portLabel = new javax.swing.JLabel();
         capacityLabel = new javax.swing.JLabel();
         nolemmingsLabel = new javax.swing.JLabel();
+        deadLemmingsLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Field");
@@ -112,7 +113,9 @@ public class FieldView extends JFrame implements Observer {
 
         capacityLabel.setText("capacity:");
 
-        nolemmingsLabel.setText("no lemmings:");
+        nolemmingsLabel.setText("# Lemmings:");
+        
+        deadLemmingsLabel.setText("dead Lemmings:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -124,6 +127,7 @@ public class FieldView extends JFrame implements Observer {
                 .addComponent(capacityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                 .addContainerGap())
                 .addComponent(nolemmingsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                .addComponent(deadLemmingsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                 );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,6 +139,8 @@ public class FieldView extends JFrame implements Observer {
                 .addComponent(capacityLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nolemmingsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deadLemmingsLabel)
                 .addContainerGap(379, Short.MAX_VALUE))
                 );
 
@@ -170,6 +176,7 @@ public class FieldView extends JFrame implements Observer {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane lemmingsField;
     private javax.swing.JLabel nolemmingsLabel;
+    private javax.swing.JLabel deadLemmingsLabel;
     private javax.swing.JLabel portLabel;
     // End of variables declaration//GEN-END:variables
 
@@ -178,7 +185,8 @@ public class FieldView extends JFrame implements Observer {
         capacityLabel.setText("capacity: " + model.getCapacity());
         hostnameLabel.setText("adress: " + model.getAddress());
         portLabel.setText("port: " + model.getPort());
-        nolemmingsLabel.setText("no lemmings: " + model.getNumberOfLemmings());
+        nolemmingsLabel.setText("# Lemmings: " + model.getNumberOfLemmings());
+        deadLemmingsLabel.setText("dead Lemmings: " + model.getDeadLemmings());
 
         setTitle(model.getFieldName());
 

@@ -42,7 +42,6 @@ public class Lemmings {
 //onpractisch   
                 FieldView fv = new FieldView(f);
                 fv.setVisible(true);
-                f.dummy2();
                 fields.add(f);
             } catch (IOException ex) {
                 ex.printStackTrace();

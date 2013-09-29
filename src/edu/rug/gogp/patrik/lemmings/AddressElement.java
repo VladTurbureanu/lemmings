@@ -68,7 +68,7 @@ public class AddressElement implements Serializable{
 
     @Override
     public int hashCode() {
-        return 1;
+        return serverPort;
     }
     
     
