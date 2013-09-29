@@ -108,13 +108,14 @@ public class Field extends Observable implements Runnable {
     }
 
     public synchronized boolean newClild(Lemming lemming) {
-        lemmings.add(new Lemming(this,counter));
-        dummy2();
+        lemmings.add(new Lemming(this, counter));
         counter++;
         if (lemmings.size() >= capacity) {
             lemmings.remove(lemming);
+            dummy2();
             return false;
         }
+        dummy2();
         return true;
     }
 

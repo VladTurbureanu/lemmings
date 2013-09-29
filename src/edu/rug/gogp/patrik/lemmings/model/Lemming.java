@@ -60,7 +60,8 @@ public class Lemming extends Thread implements Serializable {
                 }
                     break;
                 case MOVE:
-
+                    int randomField = rand.nextInt(fieldMap.getServerAddresses().size());
+                    
                     break;
             }
             currentFieldConnector.closeConnection();
@@ -99,5 +100,4 @@ public class Lemming extends Thread implements Serializable {
         return 1;
     }
 
-    
 }
