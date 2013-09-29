@@ -63,7 +63,6 @@ public class Lemmings {
                 return (new FieldView(field));
             }
         }
-        System.out.println("Mislukt!");
         return null;
     }
 
