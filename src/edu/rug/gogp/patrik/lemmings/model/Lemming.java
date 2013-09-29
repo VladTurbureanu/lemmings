@@ -14,11 +14,11 @@ public class Lemming extends Thread implements Serializable {
     private AddressElement currentField;
     private String birthPlace;
     
-    public Lemming(Field birthPlace) {
-        this.currentField = birthPlace.getFieldAddress();
+    public Lemming(Field birthField) {
+        this.currentField = birthField.getFieldAddress();
         fieldMap = new FieldMap();
-        fieldMap.addServer(birthPlace.getFieldAddress());
-        this.birthPlace = birthPlace.getFieldName();
+        fieldMap.addServer(birthField.getFieldAddress());
+        this.birthPlace = birthField.getFieldName();
     }
     
     public synchronized void verhuis(Field fieldTo) {
