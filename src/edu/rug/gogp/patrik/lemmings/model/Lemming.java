@@ -12,11 +12,13 @@ public class Lemming extends Thread implements Serializable {
     
     private FieldMap fieldMap;
     private AddressElement currentField;
+    private String birthPlace;
     
-    public Lemming(AddressElement address) {
-        this.currentField = address;
+    public Lemming(Field birthPlace) {
+        this.currentField = birthPlace.getFieldAddress();
         fieldMap = new FieldMap();
-        fieldMap.addServer(address);
+        fieldMap.addServer(birthPlace.getFieldAddress());
+        this.birthPlace = birthPlace.getFieldName();
     }
     
     public synchronized void verhuis(Field fieldTo) {
@@ -31,6 +33,6 @@ public class Lemming extends Thread implements Serializable {
     
     @Override
     public String toString() {
-        return "Lemming!";
+        return "Lemming born in " + birthPlace;
     }
 }

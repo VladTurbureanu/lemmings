@@ -21,15 +21,12 @@ public class FieldMap implements Serializable {
 
     public synchronized boolean hasServer(AddressElement address) {
         for (AddressElement addressElement : serverAdresses) {
-            System.out.println(addressElement + ":" + address);
             if (addressElement.hasServerPort(address.getServerPort())) {
                 if (addressElement.hasServerName(address.getServerName())) {
-                    System.out.println("true");
                     return true;
                 }
             }
         }
-        System.out.println("false");
         return false;
     }
 
@@ -42,18 +39,10 @@ public class FieldMap implements Serializable {
     }
 
     public synchronized void union(FieldMap fieldMap) {
-        System.out.println("\n\n:begin\n");
-        for (AddressElement addressElement : serverAdresses) {
-            System.out.println(addressElement);
-        }
         for (AddressElement addressElement : fieldMap.getServerAddresses()) {
             if (!hasServer(addressElement)) {
                 addServer(addressElement);
             }
-        }
-        System.out.println("\n\n:end\n");
-        for (AddressElement addressElement : serverAdresses) {
-            System.out.println(addressElement);
         }
     }
 }

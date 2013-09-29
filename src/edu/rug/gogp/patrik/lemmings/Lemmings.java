@@ -17,13 +17,13 @@ public class Lemmings {
         Field field;
         Field field2;
         try {
-            field = new Field(25565);
-            field2 = new Field(25566);
+            field = new Field(25565,"Groningen");
+            field2 = new Field(25566, "Leeuwarden");
             Thread t = new Thread(field);
             Thread t2 = new Thread(field2);
             t.start();
             t2.start();
-            Lemming l = new Lemming(field.getFieldAddress());
+            Lemming l = new Lemming(field);
             FieldView fv = new FieldView(field);
             FieldView fv2 = new FieldView(field2);
             fv.setVisible(true);

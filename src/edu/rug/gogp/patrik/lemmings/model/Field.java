@@ -19,50 +19,56 @@ public class Field extends Observable implements Runnable {
     private ServerSocket serverSocket;
     private FieldMap fieldMap;
     private Set<Lemming> lemmings = new HashSet<>();
-    
-    public Field(int serverPort) throws IOException {
+    private String name;
+
+    public Field(int serverPort, String name) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
         fieldMap = new FieldMap();
         fieldMap.addServer(getFieldAddress());
+        this.name = name;
     }
-    
+
     public void dummy2() {
         this.setChanged();
         this.notifyObservers();
     }
-    
+
     public String getCapacity() {
         return capacity + "";
     }
-    
+
     public String getAddress() {
         return serverSocket.getInetAddress().getHostAddress();
     }
-    
+
     public String getPort() {
         return serverSocket.getLocalPort() + "";
     }
-    
+
     public int getPortAsInteger() {
         return serverSocket.getLocalPort();
     }
-    
+
     public String getNumberOfLemmings() {
         return lemmings.size() + "";
     }
-    
+
     public String getLemmingsListing() {
-        return "<geen lemmingen>";
-    }
-    
-    public String getFieldsListing() {
         String returnString = "";
-        for (AddressElement addressElement : fieldMap.getServerAddresses()) {
-            returnString = addressElement.toString() + "\n";
+        for (Lemming lemming : lemmings) {
+            returnString += lemming.toString() + "\n";
         }
         return returnString;
     }
-    
+
+    public String getFieldsListing() {
+        String returnString = "";
+        for (AddressElement addressElement : fieldMap.getServerAddresses()) {
+            returnString += addressElement.toString() + "\n";
+        }
+        return returnString;
+    }
+
     @Override
     public void run() {
         try {
@@ -75,25 +81,26 @@ public class Field extends Observable implements Runnable {
             ex.printStackTrace();
         }
     }
-    
+
     public FieldMap getFieldMap() {
         return fieldMap;
     }
-    
+
     public void addLemming(Lemming lemming) {
         lemmings.add(lemming);
         dummy2();
     }
-    
+
     public synchronized void unionFieldMap(FieldMap fieldMap) {
         this.fieldMap.union(fieldMap);
-        for (AddressElement addressElement : fieldMap.getServerAddresses()) {
-            System.out.println(addressElement);
-        }
         dummy2();
     }
-    
-    public AddressElement getFieldAddress(){
+
+    public AddressElement getFieldAddress() {
         return new AddressElement(getAddress(), getPortAsInteger());
+    }
+
+    public String getFieldName() {
+        return name;
     }
 }
