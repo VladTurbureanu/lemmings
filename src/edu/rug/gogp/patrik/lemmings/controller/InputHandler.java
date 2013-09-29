@@ -51,9 +51,8 @@ public class InputHandler extends Thread {
                         field.unionFieldMap((FieldMap) in.readObject());
                         break;
                     case NEW_CHILD:
-                        System.out.println("hier2");
                         out = new ObjectOutputStream(incoming.getOutputStream());
-                        if (!field.newClild()) {
+                        if (!field.newClild((Lemming) in.readObject())) {
                             out.writeBoolean(false);
                         } else {
                             out.writeBoolean(true);

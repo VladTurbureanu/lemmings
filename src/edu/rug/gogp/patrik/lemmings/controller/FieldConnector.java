@@ -73,6 +73,7 @@ public class FieldConnector {
         try {
             ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeInt(InputHandler.NEW_CHILD);
+            out.writeObject(lemming);
             out.flush();
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             return in.readBoolean();

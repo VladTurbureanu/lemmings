@@ -17,7 +17,7 @@ public class Lemming extends Thread implements Serializable {
     private static final int GET_CHILD = 0;
     private static final int MOVE = 1;
     private static final int[] POSIBLE_ACTIONS = {GET_CHILD, MOVE};
-    private final int lemmingNo;
+    private int lemmingNo;
 
     public Lemming(Field birthField, int lemmingNo) {
         this.currentField = birthField.getFieldAddress();
@@ -74,12 +74,14 @@ public class Lemming extends Thread implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        System.out.println("aanroep");
         if (!(obj instanceof Lemming)) {
             return false;
         }
         Lemming lemming = (Lemming) obj;
-        if (lemming.getBirthPlace() == birthPlace) {
+        if (lemming.getBirthPlace().equals(birthPlace)) {
             if (lemming.lemmingNo() == lemmingNo) {
+                System.out.println("true");
                 return true;
             }
         }
@@ -94,4 +96,10 @@ public class Lemming extends Thread implements Serializable {
         return lemmingNo;
     }
 
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+
+    
 }

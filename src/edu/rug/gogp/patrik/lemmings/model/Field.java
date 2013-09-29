@@ -20,7 +20,7 @@ public class Field extends Observable implements Runnable {
     private FieldMap fieldMap;
     private Set<Lemming> lemmings = new HashSet<>();
     private String name;
-    private int counter;
+    private int counter = 1;
 
     public Field(int serverPort, String name) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -107,11 +107,14 @@ public class Field extends Observable implements Runnable {
         return name;
     }
 
-    public synchronized boolean newClild() {
+    public synchronized boolean newClild(Lemming lemming) {
         System.out.println("hier");
         lemmings.add(new Lemming(this,counter));
         dummy2();
+        counter++;
         if (lemmings.size() >= capacity) {
+            System.out.println("remove");
+            lemmings.remove(lemming);
             return false;
         }
         return true;
