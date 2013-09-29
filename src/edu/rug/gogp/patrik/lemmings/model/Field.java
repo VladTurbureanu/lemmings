@@ -116,4 +116,11 @@ public class Field extends Observable implements Runnable {
         }
         return true;
     }
+
+    public void addServer(AddressElement fieldAddress) {
+        FieldMap newFM = new FieldMap();
+        newFM.addServer(fieldAddress);
+        fieldMap.union(newFM);
+        dummy2();
+    }
 }
