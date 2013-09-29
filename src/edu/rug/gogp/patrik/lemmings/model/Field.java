@@ -5,6 +5,7 @@ import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class Field extends Observable implements Runnable {
     private FieldMap fieldMap;
     private Set<Lemming> lemmings = new HashSet<>();
     private String name;
-    private int counter = 5;
+    private int counter = 1;
 
     public Field(int serverPort, String name) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -33,6 +34,18 @@ public class Field extends Observable implements Runnable {
     public void dummy2() {
         this.setChanged();
         this.notifyObservers();
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void incCounter() {
+        this.counter++;
+    }
+
+    public void incCounter(int counter) {
+        this.counter += counter;
     }
 
     public String getCapacity() {
@@ -92,6 +105,10 @@ public class Field extends Observable implements Runnable {
     public void addLemming(Lemming lemming) {
         lemmings.add(lemming);
         dummy2();
+    }
+
+    public void initLemmings(ArrayList<Lemming> lemmings) {
+        this.lemmings = lemmings;
     }
 
     public synchronized void unionFieldMap(FieldMap fieldMap) {

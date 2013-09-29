@@ -68,9 +68,14 @@ public class Lemmings {
 
     private static void generateLemmings(int amount) {
         Random random = new Random();
+        ArrayList
         Field birthField = fields.get(random.nextInt(FIELDS_AMOUNT));
         for (int i = 0; i < amount; i++) {
-            birthField.addLemming(new Lemming(birthField, i)); //TODO change so that initializeLemmings is executed
+            Lemming newLemming = new Lemming(birthField);
+            int counter = birthField.getCounter();
+            newLemming.initLemmingNo(counter);
+            birthField.incCounter();
+            birthField.addLemming(newLemming); //TODO change so that initializeLemmings is executed
         }
         
     }
