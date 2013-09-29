@@ -47,6 +47,7 @@ public class Lemmings {
                 System.out.println("A error occured when writing or reading.");
                 System.out.println("The next lines give more information about this error:");
                 System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+                ex.printStackTrace();
             }
         }
     }

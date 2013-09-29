@@ -92,6 +92,7 @@ public class Field extends Observable implements Runnable {
         } catch (IOException ex) {
             System.out.println("A connection could not be established");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
     }
 

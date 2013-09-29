@@ -68,15 +68,17 @@ public class InputHandler extends Thread {
                         break;
                     case CLOSE_CONNECTION:
                         incoming.close();
-                        break;
+                        return;
                 }
             } catch (IOException ex) {
                 System.out.println("A error occured when writing or reading.");
                 System.out.println("The next lines give more information about this error:");
                 System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+                ex.printStackTrace();
             } catch (ClassNotFoundException ex) {
                 System.out.println("The object read was not in the format exspected.");
                 System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+                ex.printStackTrace();
             }
         }
     }

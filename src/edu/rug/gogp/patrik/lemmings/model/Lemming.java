@@ -64,6 +64,7 @@ public class Lemming extends Thread implements Serializable {
             } catch (InterruptedException ex) {
                 System.out.println("A error occured when the lemming was waiting before taking the next action");
                 System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+                ex.printStackTrace();
             }
             int randomAction = rand.nextInt(POSIBLE_ACTIONS.length);
             switch (POSIBLE_ACTIONS[randomAction]) {
@@ -89,6 +90,7 @@ public class Lemming extends Thread implements Serializable {
                 } catch (InterruptedException ex) {
                     System.out.println("A error occured when the lemming was sleeping");
                     System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+                    ex.printStackTrace();
                 }
                     break;
             }

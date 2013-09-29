@@ -23,10 +23,12 @@ public class FieldConnector {
         } catch (UnknownHostException ex) {
             System.out.println("Could not initialize a host.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         } catch (IOException ex) {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
     }
 
@@ -41,10 +43,12 @@ public class FieldConnector {
         } catch (UnknownHostException ex) {
             System.out.println("Could not initialize a host.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         } catch (IOException ex) {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
         return false;
     }
@@ -60,9 +64,11 @@ public class FieldConnector {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             System.out.println("The object read was not in the format exspected.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
         return null;
     }
@@ -78,6 +84,7 @@ public class FieldConnector {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
     }
 
@@ -93,6 +100,7 @@ public class FieldConnector {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
         return false;
     }
@@ -107,6 +115,7 @@ public class FieldConnector {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
     }
 
@@ -120,6 +129,7 @@ public class FieldConnector {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
     }
 
@@ -134,9 +144,11 @@ public class FieldConnector {
             System.out.println("A error accured when reading or writing.");
             System.out.println("More information follows.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             System.out.println("The object read was not in the format exspected.");
             System.out.println(ex.getCause() + "\n" + ex.getMessage() + "\n" + ex.fillInStackTrace());
+            ex.printStackTrace();
         }
         return "";
     }
