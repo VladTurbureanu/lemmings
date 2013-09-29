@@ -70,7 +70,7 @@ public class Lemmings {
         Random random = new Random();
         Field birthField = fields.get(random.nextInt(FIELDS_AMOUNT));
         for (int i = 0; i < amount; i++) {
-            birthField.addLemming(new Lemming(birthField, i));
+            birthField.addLemming(new Lemming(birthField, i)); //TODO change so that initializeLemmings is executed
         }
         
     }
