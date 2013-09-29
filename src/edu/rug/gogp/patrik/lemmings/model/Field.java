@@ -101,14 +101,14 @@ public class Field extends Observable implements Runnable {
         return fieldMap;
     }
 
-    @Deprecated
-    public void addLemming(Lemming lemming) {
+    public synchronized boolean addLemming(Lemming lemming) {
+        if (lemmings.size() >= capacity) {
+            return false;
+        }
         lemmings.add(lemming);
+        counter++;
         dummy2();
-    }
-
-    public void initLemmings(ArrayList<Lemming> lemmings) {
-        this.lemmings = lemmings;
+        return true;
     }
 
     public synchronized void unionFieldMap(FieldMap fieldMap) {
@@ -125,7 +125,9 @@ public class Field extends Observable implements Runnable {
     }
 
     public synchronized boolean newClild(Lemming lemming) {
-        lemmings.add(new Lemming(this, counter));
+        Lemming newLemming = new Lemming(this);
+        newLemming.initLemmingNo(counter);
+        lemmings.add(newLemming);
         counter++;
         if (lemmings.size() > capacity) {
             lemmings.remove(lemming);

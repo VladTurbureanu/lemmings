@@ -17,7 +17,7 @@ public class Lemming extends Thread implements Serializable {
     private static final int GET_CHILD = 0;
     private static final int MOVE = 1;
     private static final int[] POSIBLE_ACTIONS = {GET_CHILD, MOVE};
-    private final int lemmingNo;
+    private int lemmingNo;
 
     public Lemming(Field birthField) {
         this.currentField = birthField.getFieldAddress();

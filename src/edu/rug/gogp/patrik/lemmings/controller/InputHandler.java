@@ -40,6 +40,7 @@ public class InputHandler extends Thread {
                 int inputInt = in.readInt();
                 switch (inputInt) {
                     case MOVE_LEMMING:
+                        
                         field.addLemming((Lemming) in.readObject());
                         break;
                     case GET_FIELDMAP:
