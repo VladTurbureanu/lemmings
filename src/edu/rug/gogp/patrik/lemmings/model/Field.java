@@ -1,6 +1,7 @@
 package edu.rug.gogp.patrik.lemmings.model;
 
 import edu.rug.gogp.patrik.lemmings.AddressElement;
+import edu.rug.gogp.patrik.lemmings.controller.FieldConnector;
 import edu.rug.gogp.patrik.lemmings.controller.InputHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -22,6 +23,7 @@ public class Field extends Observable implements Runnable {
     private Set<Lemming> lemmings = new HashSet<>();
     private String name;
     private int counter = 1;
+    private int deadLemming = 0;
 
     public Field(int serverPort, String name) throws IOException {
         this.serverSocket = new ServerSocket(serverPort);
@@ -65,7 +67,7 @@ public class Field extends Observable implements Runnable {
     }
 
     public String getNumberOfLemmings() {
-        return lemmings.size() + "";
+        return deadLemming + "";
     }
 
     public String getLemmingsListing() {
@@ -79,7 +81,9 @@ public class Field extends Observable implements Runnable {
     public String getFieldsListing() {
         String returnString = "";
         for (AddressElement addressElement : fieldMap.getServerAddresses()) {
-            returnString += addressElement.toString() + "\n";
+            FieldConnector fc = new FieldConnector(addressElement);
+            returnString += fc.getName() + "\n";
+            fc.closeConnection();
         }
         return returnString;
     }
@@ -103,12 +107,18 @@ public class Field extends Observable implements Runnable {
 
     public synchronized boolean addLemming(Lemming lemming) {
         if (lemmings.size() >= capacity) {
+            deadLemming++;
             return false;
         }
         lemmings.add(lemming);
         counter++;
         dummy2();
         return true;
+    }
+    
+     public synchronized void removeLemming(Lemming lemming) {
+        lemmings.remove(lemming);
+        dummy2();
     }
 
     public synchronized void unionFieldMap(FieldMap fieldMap) {
@@ -131,6 +141,7 @@ public class Field extends Observable implements Runnable {
         counter++;
         if (lemmings.size() > capacity) {
             lemmings.remove(lemming);
+            deadLemming++;
             dummy2();
             return false;
         }

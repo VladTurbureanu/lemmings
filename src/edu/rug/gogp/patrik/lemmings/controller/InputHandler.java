@@ -19,6 +19,8 @@ public class InputHandler extends Thread {
     public static final int SET_FIELDMAP = 2;
     public static final int NEW_CHILD = 3;
     public static final int CLOSE_CONNECTION = 4;
+    public static final int REMOVE_LEMMING = 5;
+    public static final int GET_NAME = 6;
     private Socket incoming;
     private Field field;
 
@@ -32,7 +34,6 @@ public class InputHandler extends Thread {
         while (true) {
             try {
                 if (incoming.isClosed()) {
-                    this.interrupt();
                     return;
                 }
                 ObjectInputStream in = new ObjectInputStream(incoming.getInputStream());
@@ -56,7 +57,14 @@ public class InputHandler extends Thread {
                         out = new ObjectOutputStream(incoming.getOutputStream());
                         out.writeBoolean(field.newClild((Lemming) in.readObject()));
                         out.flush();
-
+                        break;
+                    case REMOVE_LEMMING:
+                        field.removeLemming((Lemming) in.readObject());
+                        break;
+                    case GET_NAME:
+                        out = new ObjectOutputStream(incoming.getOutputStream());
+                        out.writeObject(field.getFieldName());
+                        out.flush();
                         break;
                     case CLOSE_CONNECTION:
                         incoming.close();

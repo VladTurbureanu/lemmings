@@ -93,7 +93,33 @@ public class FieldConnector {
             out.flush();
             s.close();
         } catch (IOException ex) {
-            Logger.getLogger(FieldConnector.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+    }
+    
+    public void removeLemming(Lemming lemming){
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeInt(InputHandler.REMOVE_LEMMING);
+            out.writeObject(lemming);
+            out.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public String getName(){
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeInt(InputHandler.GET_NAME);
+            out.flush();
+            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
+            return (String) in.readObject();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return "";
     }
 }

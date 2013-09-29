@@ -16,7 +16,8 @@ public class Lemming extends Thread implements Serializable {
     private String birthPlace;
     private static final int GET_CHILD = 0;
     private static final int MOVE = 1;
-    private static final int[] POSIBLE_ACTIONS = {GET_CHILD, MOVE};
+    private static final int SLEEP = 2;
+    private static final int[] POSIBLE_ACTIONS = {GET_CHILD, MOVE, SLEEP};
     private int lemmingNo;
 
     public Lemming(Field birthField) {
@@ -27,20 +28,26 @@ public class Lemming extends Thread implements Serializable {
         this.start();
     }
 
-    public synchronized void move(AddressElement fieldToAddress) {
+    public AddressElement getCurrentField() {
+        return currentField;
+    }
+
+    public synchronized boolean move(AddressElement fieldToAddress) {
         FieldConnector fieldToConnector = new FieldConnector(fieldToAddress);
         FieldConnector currentFieldConnector = new FieldConnector(currentField);
         FieldMap serverMap = currentFieldConnector.getFieldMap();
+        currentFieldConnector.removeLemming(this);
         fieldMap.union(serverMap);
         if (!fieldToConnector.send(this)) {
             currentFieldConnector.closeConnection();
             fieldToConnector.closeConnection();
-            return;
+            return false;
         }
         fieldToConnector.setFieldMap(fieldMap);
         currentField = fieldToAddress;
         fieldToConnector.closeConnection();
         currentFieldConnector.closeConnection();
+        return true;
     }
 
     @Override
@@ -52,28 +59,42 @@ public class Lemming extends Thread implements Serializable {
     public synchronized void run() {
         while (true) {
             Random rand = new Random();
-            FieldConnector currentFieldConnector = new FieldConnector(currentField);
+            try {
+                this.wait(rand.nextInt(2000) + 1000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
             int randomAction = rand.nextInt(POSIBLE_ACTIONS.length);
             switch (randomAction) {
                 case GET_CHILD:
+                    System.out.println("a baby! " + birthPlace + ":" + lemmingNo);
+                    FieldConnector currentFieldConnector = new FieldConnector(currentField);
                     if (!currentFieldConnector.askForChild(this)) {
-                    this.interrupt();
+                        System.out.println("need to make place for my baby " + birthPlace + ":" + lemmingNo);
+                        currentFieldConnector.closeConnection();
+                        return;
+                    }
                     currentFieldConnector.closeConnection();
-                    return;
-                }
                     break;
                 case MOVE:
+                    System.out.println("Time to Move: " + birthPlace + ":" + lemmingNo);
                     int randomField = rand.nextInt(fieldMap.getServerAddresses().size());
-                    if (fieldMap.getServerAddress(randomField) != currentField) {
-                        move(fieldMap.getServerAddress(randomField));
+                    if (!fieldMap.getServerAddress(randomField).equals(currentField)) {
+                        System.out.println("found another field! " + birthPlace + ":" + lemmingNo);
+                        if (!move(fieldMap.getServerAddress(randomField))) {
+                            System.out.println("this field is full :( " + birthPlace + ":" + lemmingNo);
+                            return;
+                        }
                     }
                     break;
-            }
-            currentFieldConnector.closeConnection();
-            try {
-                this.wait(3000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                case SLEEP:
+                    System.out.println("i feel sleepy: " + birthPlace + ":" + lemmingNo);
+                    try {
+                    this.wait(rand.nextInt(10000));
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                    break;
             }
         }
     }

@@ -51,4 +51,26 @@ public class AddressElement implements Serializable{
     public String toString() {
         return serverName + ":" + serverPort;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AddressElement)) {
+            return false;
+        }
+        AddressElement address = (AddressElement) obj;
+        if (address.hasServerName(serverName)) {
+            if (address.hasServerPort(serverPort)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+    
+    
+    
 }
