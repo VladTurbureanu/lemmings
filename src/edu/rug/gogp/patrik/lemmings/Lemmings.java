@@ -43,12 +43,11 @@ public class Lemmings {
     
     public static void generateFieldMaps(){
         Random random = new Random();
-        
         for (Field field : fields) {
-            for (int i = 0; i < FIELDS_AMOUNT/5; i++) {
+            for (int i = 0; i < random.nextInt(FIELDS_AMOUNT); i++) {
                 Field mapField = fields.get(random.nextInt(FIELDS_AMOUNT));
                 if(!mapField.equals(field)){
-                    field.getFieldMap().addServer(mapField.getFieldAddress());
+                    field.addServer(mapField.getFieldAddress());
                 }else{
                     i--;
                 }
